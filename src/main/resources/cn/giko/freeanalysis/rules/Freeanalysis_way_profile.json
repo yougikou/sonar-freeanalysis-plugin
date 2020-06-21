@@ -1,0 +1,6 @@
+{
+  "name": "FreeAnalysis way",
+  "ruleKeys": [
+    "LineCountCheck"
+  ]
+}

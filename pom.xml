@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.gikoyo.sonar</groupId>
+    <artifactId>sonar-freeanalysis-plugin</artifactId>
+    <!-- Change version to enable sonarlint in studio,
+      If version is too low, when load to sonarlint it will show error
+      Please make sure version is big than the required version -->
+    <!-- If just need server side code analysis, then do a normal version management -->
+    <version>4.0.0</version>
+
+    <!-- this is important for sonar-packaging-maven-plugin -->
+    <packaging>sonar-plugin</packaging>
+
+    <name>Free analysis plugin for SonarQube 7.9.x LTS</name>
+    <description>Custom rule plugin for any file, code. Quick start approach for language not supported by sonar.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.apiVersion>7.9</sonar.apiVersion>
+        <jdk.min.version>1.8</jdk.min.version>
+
+        <sonar.analyzerCommons.version>1.10.2.456</sonar.analyzerCommons.version>
+        <sonar.orchestrator.version>3.24.0.1993</sonar.orchestrator.version>
+        <sonar.sonarlint-core.version>4.1.0.2218</sonar.sonarlint-core.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <!-- minimal version of SonarQube to support. -->
+            <version>${sonar.apiVersion}</version>
+            <!-- mandatory scope -->
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.sonarsource.analyzer-commons</groupId>
+            <artifactId>sonar-analyzer-commons</artifactId>
+            <version>${sonar.analyzerCommons.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.sonarsource.orchestrator</groupId>
+            <artifactId>sonar-orchestrator</artifactId>
+            <version>${sonar.orchestrator.version}</version>
+        </dependency>
+
+        <!-- unit tests -->
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-testing-harness</artifactId>
+            <version>${sonar.apiVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.sonarsource.sonarlint.core</groupId>
+            <artifactId>sonarlint-core</artifactId>
+            <version>${sonar.sonarlint-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.sonarsource.analyzer-commons</groupId>
+            <artifactId>sonar-analyzer-test-commons</artifactId>
+            <version>${sonar.analyzerCommons.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>1.18.0.372</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- the entry-point class that extends org.sonar.api.SonarPlugin -->
+                    <!--<pluginKey>your key</pluginKey>-->
+                    <!-- Change to swift to use sonarlint feature, please remove swift plugin at server side if exist-->
+                    <pluginKey>swift</pluginKey>
+                    <pluginName>Free analysis plugin</pluginName>
+                    <pluginClass>cn.giko.freeanalysis.FreeAnalysisPlugin</pluginClass>
+                    <pluginDescription>Custom rule plugin for any file, code. Quick start approach for language not supported by sonar.</pluginDescription>
+                    <sonarLintSupported>true</sonarLintSupported>
+                    <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
+                    <!-- advanced properties can be set here. See paragraph "Advanced Build Properties". -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${jdk.min.version}</source>
+                    <target>${jdk.min.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

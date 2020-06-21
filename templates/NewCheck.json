@@ -1,0 +1,9 @@
+{
+  "title": "Please input rule name",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "style"
+  ],
+  "defaultSeverity": "Minor"
+}

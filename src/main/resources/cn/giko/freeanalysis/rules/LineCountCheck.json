@@ -1,0 +1,9 @@
+{
+  "title": "Source code should be indented consistently - Line Count Check",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "style"
+  ],
+  "defaultSeverity": "Minor"
+}
